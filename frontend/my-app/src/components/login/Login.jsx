@@ -5,6 +5,7 @@ import VisibilityIcon from '@mui/icons-material/Visibility';
 import VisibilityOffIcon from '@mui/icons-material/VisibilityOff';
 import { IconButton, InputAdornment } from "@mui/material";
 import "./login.css";
+import { styled } from '@mui/system';
 
 const Login = () => {
   const [password, setPassword] = useState('');
@@ -59,13 +60,15 @@ const Login = () => {
     } else if (!/[!@#$%^&*]/.test(password)) {
       return 'Password must contain at least one special character (!@#$%^&*)';
     }
-    return ''; // Return empty string when password is valid
+    return ''; 
   };
 
   const handleEye = () => {
     setEye(!eye);
   };
+  
 
+  
   return (
     <div className="container">
       <div className="loginbox">
@@ -82,11 +85,18 @@ const Login = () => {
               value={email}
               onChange={handleEmailChange}
               type="email"
-              label="Email"
+              // label="Email"
+              placeholder="email"
               variant="outlined"
               error={!emailValid && email !== ''}
               helperText={!emailValid && email ? 'Please enter a valid email' : ''}
               fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              InputProps={{
+                sx:{borderRadius:2,border:0, height:42,fontSize:15,backgroundColor:"#F2F4F7", "& fieldset": { border: 'none' }}
+              }}
             />
           </div>
           <div className="password-input">
@@ -95,7 +105,7 @@ const Login = () => {
               value={password}
               onChange={handlePasswordChange}
               type={eye ? "text" : "password"}
-              label="Password"
+              placeholder="password"s
               variant="outlined"
               InputProps={{
                 endAdornment: (
@@ -104,15 +114,20 @@ const Login = () => {
                       {eye ? <VisibilityIcon /> : <VisibilityOffIcon />}
                     </IconButton>
                   </InputAdornment>
-                )
+                ),
+                sx:{borderRadius:2 , height:42,fontSize:15,backgroundColor:"#F2F4F7",   "& fieldset": { border: 'none' }}
               }}
               error={!valid && password !== ''}
               helperText={!valid && password ? getPasswordHelperText() : ''}
               fullWidth
+              InputLabelProps={{
+                shrink: true,
+              }}
+              
             />
           </div>
           <div className="login-btn">
-            <Button variant="contained" fullWidth sx={{ height: "50px", borderRadius: "10px", border: "none" }}>
+            <Button variant="contained" fullWidth sx={{ height: "50px", borderRadius: "10px", border: "none",backgroundColor:"#1570EF" }}>
               Login
             </Button>
           </div>
@@ -123,3 +138,5 @@ const Login = () => {
 };
 
 export default Login;
+
+

@@ -2,7 +2,8 @@
 .container {
     width: 100vw; 
     height: 100vh; 
-    background-image: url('D:\chaitu\FRONTEND\REACT+MUI\frontend\my-app\public\background.jpg'); /* Background image URL */
+    /* background-image: url('frontend\my-app\public\background.jpg');  */
+    background-image: url('../../../public/background.jpg');
     background-size: cover; 
     background-position: center; 
     display: flex; 
@@ -12,7 +13,7 @@
 
 .loginbox {
     width: 438px;
-    height: 500px;
+    height: auto;
     margin: auto;
     padding: 10px;
     box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
@@ -31,15 +32,15 @@
   }
   
   
-  @media (min-width: 300px) {
+  @media (min-width: 400px) {
     .loginbox {
       width: 80%; 
       max-width: 400px; 
-      margin-top: 120px; 
+      margin-top: 155px; 
     }
   
     .login-content {
-      width: 300px; 
+      width: 90%; 
       margin: auto;
 
     }
@@ -55,6 +56,7 @@
   
   .login-btn {
     margin-top: 20px;
+    padding: 10px 0 20px 0;
   }
   
   .title {
@@ -66,15 +68,17 @@
   
   .logo {
     text-align: center; 
-    margin-top: 30px;
   }
   
   .logo img {
-    width: 270px;
+    width: 190px;
     max-width: 100%;
     display: block;
     margin: 0 auto; 
   }
+
+  
+  
   
 
   /* .loginbox{
