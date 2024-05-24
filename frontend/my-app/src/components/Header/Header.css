@@ -1,0 +1,37 @@
+
+
+  .header {
+    background-color: #F3F3F3;
+    color: #293649;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: auto; 
+    height: 10vh;
+    overflow-y: hidden;
+  }
+  .logo-container {
+    display: flex;
+    align-items: center;
+  }
+  
+  .logo {
+    margin-left: 11px;
+    width: 153px; /* Adjust the width of the logo as needed */
+    height: auto; /* Maintain aspect ratio */
+    /* margin-right: 10px; */
+    ;
+  }
+
+  .icon {
+    margin-right: 30px; /* Adjust the spacing between icons */
+    font-size: 30px; /* Adjust icon size as needed */
+  }
+  .icon:hover{
+    transform: scale(1.2);
+  }
+  .options {
+    display: flex;
+    align-items: center;
+  }

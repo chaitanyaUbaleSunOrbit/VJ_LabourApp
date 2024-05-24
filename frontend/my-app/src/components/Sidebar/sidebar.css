@@ -1,0 +1,91 @@
+
+
+  .sidebar {
+    background-color: #293649;
+    color: white;
+    width: 160px;
+    padding: 20px;
+    height: 90vh;
+    
+  }
+  .stages{
+  display: flex;
+    width: 199px;
+    margin-left: -19px;
+    margin-top: -20px;   
+    height: 59px;
+    background: #252E3F;
+    color: white;
+    justify-content: center;
+    align-items: center;
+    font-family: "Inter", sans-serif;
+    font-weight: 400;
+ 
+    box-sizing: border-box;
+  }
+  
+  .profile-section {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    gap: 15px;
+    padding-top: 20px;
+  }
+  
+  .application-section {
+    cursor: pointer;
+
+  }
+  
+  .application-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0px;
+
+  }
+  
+  .application-list {
+    list-style-type: none;
+    padding-left: 20px;
+  }
+  
+  .application-list li {
+    list-style-type: none;
+    padding-top: 10px;
+    padding-left: 10px;
+  }
+  
+  .application-list li:hover {
+    color: rgb(206, 238, 65);
+    font-family: "Rubik", sans-serif;
+  }
+  
+  .bullet {
+  
+    color: rgb(251, 255, 7);
+
+    margin-right: 5px;
+    font-size: 19px;
+  }
+  
+  .mains {
+    font-family: "Rubik", sans-serif;
+    cursor: pointer;
+  }
+  
+  .mains:hover {
+    color: greenyellow;
+  }
+  
+  .sidebar-link {
+    color: white;
+    text-decoration: none;
+  }
+  
+  .sidebar-link:hover {
+    color: rgb(218, 243, 106);
+  }
+  
+
+

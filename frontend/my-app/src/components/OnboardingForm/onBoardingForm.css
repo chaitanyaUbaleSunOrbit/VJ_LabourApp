@@ -1,0 +1,279 @@
+
+  
+  /* .form {
+    padding: 20px;
+  }
+  
+  .form label {
+    display: block;
+    margin-bottom: 5px;
+  }
+  
+  .form input {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+  }
+   */
+  /* Add more styles as needed */
+  /* Container for the entire form */
+.onboarding-form-container {
+  /* background-color: #f9f9f9; */
+  width: 100%;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 90vh;
+  overflow-x: hidden;
+
+}
+
+.select-container{
+  display: flex;
+  justify-content: center;
+  position: relative;
+  min-width: 250px;
+  height: 50px;
+}
+
+
+
+.select-box{
+  border: none;
+  /* appearance: none; */
+  padding: 0 30px 0 15px;
+  width: 100%;
+  font-size: 20px;
+}
+
+.select-box option:hover {
+  background-color: red; /* Change the background color on hover */
+  color: black; /* Change the text color on hover */
+}
+
+
+
+/* Heading style */
+.onboarding-form-container h2 {
+  font-size: 20px;
+  color: #333;
+  margin-left: 30px;
+}
+.title{
+  border-bottom: 1px solid #DFDFDF;
+}
+
+.form-body{
+  padding-left: 80px;
+  padding-top: 10px;
+  height: auto;
+  margin-top: 30px;
+  gap: 20px;
+  
+}
+
+/* Form styles */
+.onboarding-form {
+  width:auto ;
+}
+
+/* Label styles */
+.onboarding-form label {
+  font-weight: 400;
+  font-size: 13px;
+  margin-bottom: 8px;
+}
+
+/* Input styles */
+.onboarding-form input{
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 250px;
+  color: #B5B5B5;
+  font-weight: 500;
+  height: 18px;
+
+}
+.input-with-icon {
+  position: relative;
+  display: inline-block;
+}
+
+.input-with-icon input[type="file"] {
+  padding-left: 35px; /* Adjust to make space for the icon */
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 250px;
+  color: #B5B5B5;
+  font-weight: 500;
+  height: 20px; /* Adjust height as needed */
+}
+
+.input-with-icon .input-icon {
+  position: absolute;
+  left: 250px; /* Position the icon inside the input field */
+  top: 35%;
+  transform: translateY(-50%);
+  pointer-events: none; /* Ensure the icon doesn't block clicks on the input field */
+  color: #A772D0;
+}
+
+
+.onboarding-form select,
+.onboarding-form select{
+  padding: 12px;
+  margin-bottom: 20px;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  font-size: 16px;
+  width: 276px;
+  color: #B5B5B5;
+  font-weight: 300;
+  height: 45px;
+
+}
+
+
+
+
+.onboarding-form input:focus,
+.onboarding-form select:focus {
+  /* border-color: #EFE6F7; */
+  border-color: #A772D0;
+  outline: none;
+}
+
+
+/* Button style */
+.onboarding-form button {
+  padding: 12px 20px;
+  border: none;
+  border-radius: 4px;
+  background-color: #007bff;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.onboarding-form button:hover {
+  background-color: #0056b3;
+}
+
+.gender-input{
+  width: 500px;
+}
+.name-contact{
+  display: flex;
+  border: none;
+  gap: 100px;
+}
+.labour-adhaar{
+  display: flex;
+  border: none;
+  gap: 100px;
+}
+.birth-aadhaar{
+  display: flex;
+  border: none;
+  gap: 100px;
+}
+.state-block{
+  display: flex;
+  border: none;
+  gap: 100px;  
+}
+.locations{
+  display: flex;
+  border: none;
+  gap: 100px; 
+}
+.em-contact-block{
+  display: flex;
+  border: none;
+  gap: 100px; 
+}
+
+.contact-block{
+  display: flex;
+  border: none;
+  gap: 100px; 
+}
+
+select option{
+  border-radius: none;
+  height: 50px;
+}
+/* Responsive design */
+@media (max-width: 600px) {
+  .onboarding-form-container {
+    padding: 15px;
+    max-width: 100%;
+  }
+  
+  .onboarding-form input,
+  .onboarding-form select {
+    font-size: 12px;
+  }
+}
+
+.save-btn{
+  float: right;
+}
+
+
+.save-btn #save:hover{
+  background: #A772D0;
+  color: #EFE6F7;
+  transition: background-color 0.5s ease, color 0.5s ease;
+
+}
+
+#save{
+  background: #EFE6F7;
+  color:#A772D0;
+  font-size: 15px;
+  width: 200px;
+  border-radius: 10px;
+  margin-right: 100px;
+  
+}
+.address-suggestions {
+  position: absolute;
+  background-color: white;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  max-height: 200px;
+  overflow-y: auto;
+  width: calc(60% - 20px); /* Adjust width according to your input field */
+  z-index: 1000;
+  margin-top: 5px;
+}
+
+.address-suggestion {
+  padding: 10px;
+  cursor: pointer;
+}
+
+.address-suggestion:hover {
+  background-color: #f0f0f0;
+}
+
+/* const handleAddressChange = async (e) => {
+  const address = e.target.value;
+  setFormData({ ...formData, address }); // Update formData with address
+
+  try {
+    const response = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.3db117d75e7099fdfe3a158dbec88adb&q=${address}&format=json`);
+    setSuggestions(response.data);
+  } catch (error) {
+    console.error('Error fetching address suggestions:', error);
+    setSuggestions([]);
+  }
+}; */
