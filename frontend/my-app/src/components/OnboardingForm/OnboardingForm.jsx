@@ -5,7 +5,18 @@ import "./onBoardingForm.css";
 import axios from 'axios';
 import DocumentScannerIcon from '@mui/icons-material/DocumentScanner';
 const OnboardingForm = ({ formType, onFormSubmit }) => {
-  const [formData, setFormData] = useState({});
+  // const [formData, setFormData] = useState({});
+  const [formData, setFormData] = useState({
+    aadhaarNumber: '',
+    name: '',
+    contactNumber: '',
+    dateOfBirth: '',
+    village: '',
+    taluka: '',
+    district: '',
+    state: '',
+    pincode: ''
+  });
   const [dateOfBirth, setDateOfBirth] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [suggestions, setSuggestions] = useState([]);
@@ -40,90 +51,137 @@ const OnboardingForm = ({ formType, onFormSubmit }) => {
     const file = event.target.files[0];
     console.log("Selected file:", file);
     setAadhaarImage(file);
-    uploadAadhaarImageToOCRSpace(file);
+    uploadAadhaarImageToSurepass(file);
   };
 
-  const uploadAadhaarImageToOCRSpace = async (file) => {
+  // const uploadAadhaarImageToSurepass = async (file) => {
+  //   const formData = new FormData();
+  //   formData.append('file', file);
+  //   // formData.append('apikey', 'eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NzEwNDcxNCwianRpIjoiOWNhMDViZTAtZTMwYS00NTc5LTk5MzEtYWY3MmVmYzg1ZGFhIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2LmphdmRla2Fyc0BhYWRoYWFyYXBpLmlvIiwibmJmIjoxNjQ3MTA0NzE0LCJleHAiOjE5NjI0NjQ3MTQsInVzZXJfY2xhaW1zIjp7InNjb3BlcyI6WyJyZWFkIl19fQ.cGYIaxfNm0BDCol5_7I1DaJFZE-jXSel2E63EHl2A4A');
+
+  //   try {
+  //     const response = await axios.post('https://kyc-api.aadhaarkyc.io/api/v1/ocr/aadhaar', formData, {
+  //       headers: {
+  //         'Content-Type': 'multipart/form-data',
+  //         'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NzEwNDcxNCwianRpIjoiOWNhMDViZTAtZTMwYS00NTc5LTk5MzEtYWY3MmVmYzg1ZGFhIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2LmphdmRla2Fyc0BhYWRoYWFyYXBpLmlvIiwibmJmIjoxNjQ3MTA0NzE0LCJleHAiOjE5NjI0NjQ3MTQsInVzZXJfY2xhaW1zIjp7InNjb3BlcyI6WyJyZWFkIl19fQ.cGYIaxfNm0BDCol5_7I1DaJFZE-jXSel2E63EHl2A4A'
+  //       }
+  //     });
+
+  //     const { data } = response;
+  //     console.log(data)
+  //     if (data && data.result) {
+  //       setFormData({
+  //         aadhaarNumber: data.result.ocr_fields,
+  //         name: data.result.name,
+  //         contactNumber: data.result.contactNumber, // if available in response
+  //         dateOfBirth: data.result.dateOfBirth
+  //       });
+  //       setDateOfBirth(data.result.dateOfBirth);
+  //     }
+  //   } catch (error) {
+  //     console.error('Error uploading Aadhaar image to Surepass:', error);
+  //   }
+  // };
+  const uploadAadhaarImageToSurepass = async (file) => {
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('apikey', 'YOUR_OCR_API_KEY');
-    formData.append('language', 'eng');
-
+  
     try {
-      const response = await axios.post('https://api.ocr.space/parse/image', formData, {
+      const response = await axios.post('https://kyc-api.aadhaarkyc.io/api/v1/ocr/aadhaar', formData, {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          'Content-Type': 'multipart/form-data',
+          'Authorization': 'Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJmcmVzaCI6ZmFsc2UsImlhdCI6MTY0NzEwNDcxNCwianRpIjoiOWNhMDViZTAtZTMwYS00NTc5LTk5MzEtYWY3MmVmYzg1ZGFhIiwidHlwZSI6ImFjY2VzcyIsImlkZW50aXR5IjoiZGV2LmphdmRla2Fyc0BhYWRoYWFyYXBpLmlvIiwibmJmIjoxNjQ3MTA0NzE0LCJleHAiOjE5NjI0NjQ3MTQsInVzZXJfY2xhaW1zIjp7InNjb3BlcyI6WyJyZWFkIl19fQ.cGYIaxfNm0BDCol5_7I1DaJFZE-jXSel2E63EHl2A4A'
         }
       });
+  
+      const { data } = response;
+      console.log(data)
+    if (data && data.success && data.data && data.data.ocr_fields && data.data.ocr_fields.length > 0) {
+      const ocrFields = data.data.ocr_fields[0]; // Assuming only one OCR field object is returned
 
-      const { ParsedResults } = response.data;
-      if (ParsedResults && ParsedResults.length > 0) {
-        const parsedData = ParsedResults[0];
-        // Extract relevant fields from parsed data and update form state
-        setFormData({
-          aadhaarNumber: parsedData.ParsedText.match(/\d{4}\s\d{4}\s\d{4}/)[0],
-          name: parsedData.ParsedText.match(/(Name)(.*?)(Father|Mother|Spouse)/)[2].trim(),
-          dateOfBirth: parsedData.ParsedText.match(/\d{2}\/\d{2}\/\d{4}/)[0],
-          // You may need to extract contact number and other fields similarly
-        });
-      }
-    } catch (error) {
-      console.error('Error uploading Aadhaar image to OCR.space:', error);
+      setFormData({
+        aadhaarNumber: ocrFields.aadhaar_number.value,
+        name: ocrFields.full_name.value,
+        dateOfBirth: ocrFields.dob.value,
+        gender: ocrFields.gender.value,
+        village: formData.village,
+          taluka: formData.taluka,
+          district: formData.district,
+          state: formData.state,
+          pincode: formData.pincode
+      });
+      setDateOfBirth(ocrFields.dob.value);
+    } else {
+      console.error('Error uploading Aadhaar image to Surepass: OCR fields not found in response');
     }
-  };
-
+  } catch (error) {
+    console.error('Error uploading Aadhaar image to Surepass:', error);
+  }
+};
+  
   const renderRequiredAsterisk = (isRequired) => {
     return isRequired ? <span style={{ color: "red" }}> *</span> : null;
   };
 
 
-const handleAddressChange = async (e) => {
-  const address = e.target.value;
-  setFormData({ ...formData, address }); // Update formData with address
+// const handleAddressChange = async (e) => {
+//   const address = e.target.value;
+//   setFormData({ ...formData, address }); 
 
-  try {
-    const response = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.3db117d75e7099fdfe3a158dbec88adb&q=${address}&format=json`);
-    setSuggestions(response.data);
-  } catch (error) {
-    console.error('Error fetching address suggestions:', error);
-    setSuggestions([]);
+//   try {
+//     // const response = await axios.get(`https://us1.locationiq.com/v1/search.php?key=pk.3db117d75e7099fdfe3a158dbec88adb&q=${address}&format=json`);
+//     const response = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+    
+//     setSuggestions(response.data);
+//   } catch (error) {
+//     console.error('Error fetching address suggestions:', error);
+//     setSuggestions([]);
+//   }
+// }; 
+const handlePincodeChange = async (e) => {
+  const pincode = e.target.value;
+  setFormData({ ...formData, pincode });
+
+  if (pincode.length === 6) {
+    try {
+      const response = await axios.get(`https://api.postalpincode.in/pincode/${pincode}`);
+
+      if (response.data && response.data[0] && response.data[0].Status === "Success") {
+        const postOffice = response.data[0].PostOffice[0];
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          village: postOffice.Name,
+          taluka: postOffice.Block,
+          district: postOffice.District,
+          state: postOffice.State
+        }));
+      } else {
+        console.error('Location data not found');
+      }
+    } catch (error) {
+      console.error('Error fetching location data:', error);
+    }
   }
-}; 
+};
 
-// const handleAddressSelect = (selectedAddress) => {
-
-//   setFormData((prevFormData) => ({
-//     ...prevFormData,
-//     address: selectedAddress.display_name,
-//     village: selectedAddress.address?.city || selectedAddress.address?.town || selectedAddress.address?.village || '',
-//     taluka: selectedAddress.address?.suburb || '',
-//     district: selectedAddress.address?.county || '',
-//     state: selectedAddress.address?.state || '',
-//     pincode: selectedAddress.address?.postcode || '',
-//   }));
-//   setSuggestions([]);
-// };
 const handleAddressSelect = (selectedAddress) => {
-  // Extract city, taluka, district, and state from display_name
   const addressComponents = selectedAddress.display_name.split(', ');
   const city = addressComponents[1];
   const taluka = addressComponents[1];
   const district = addressComponents[2];
   const state = addressComponents[3];
-  const pincode = addressComponents[7];
+  const pincode = addressComponents[7] || addressComponents[5] || addressComponents[6];
 
-  // Update formData with selected address details
   setFormData((prevFormData) => ({
     ...prevFormData,
     address: selectedAddress.display_name,
-    village: city, // Assuming city as village, you may adjust this if needed
+    village: city, 
     taluka: taluka || '',
     district: district || '',
     state: state || '',
-    pincode: pincode || '', // Reset pincode, as it's not provided by the API response
+    pincode: pincode || '', 
   }));
 
-  // Clear suggestions
   setSuggestions([]);
 };
 
@@ -163,7 +221,7 @@ const handleAddressSelect = (selectedAddress) => {
                 </div>
               </div>
 
-              <div className="adharNumber">
+              {/* <div className="adharNumber">
                 <InputLabel
                   id="demo-simple-select-label"
                   sx={{ color: "black" }}
@@ -172,9 +230,22 @@ const handleAddressSelect = (selectedAddress) => {
                 </InputLabel>
 
                 <div id="adhaar-input">
-                <input value={formData.aadhaarNumber} required />
+                <input 
+                value={formData.aadhaarNumber}
+                onChange={(e) => setFormData({ ...formData, aadhaarNumber: e.target.value })}
+                 required 
+                />
                 </div>
-              </div>
+              </div> */}
+                           <div className="project-field">
+  <InputLabel id="aadhaar-label" sx={{ color: "black" }}>
+    Upload Aadhaar{renderRequiredAsterisk(true)}
+  </InputLabel>
+  <div className="input-with-icon">
+    <input type="file" onChange={handleFileChange} required />
+    <DocumentScannerIcon className="input-icon" />
+  </div>
+</div>
               </div>
               <div className="name-contact">
                 <div className="name">
@@ -184,7 +255,9 @@ const handleAddressSelect = (selectedAddress) => {
                   >
                     Name{renderRequiredAsterisk(true)}
                   </InputLabel>
-                  <input value={formData.name} required />
+                  <input value={formData.name || ""} required
+                   onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+                  />
                 </div>
 
                 <div className="contact">
@@ -195,7 +268,10 @@ const handleAddressSelect = (selectedAddress) => {
                     Contact number{renderRequiredAsterisk(true)}
                   </InputLabel>
 
-                  <input value={formData.contactNumber} required />
+                  <input
+                   value={formData.contactNumber || ""} 
+                   onChange={(e) => setFormData({ ...formData, contactNumber: e.target.value })}
+                  required />
                 </div>
               </div>
               <div className="birth-aadhaar">
@@ -218,14 +294,8 @@ const handleAddressSelect = (selectedAddress) => {
       {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
                 </div>
               </div>
+            
               {/* <div className="project-field">
-                <InputLabel id="salary-label" sx={{ color: "black" }}>
-                  Upload Aadhaar{renderRequiredAsterisk(true)}
-                </InputLabel>
-                <input type="file" onChange={handleFileChange} required />
-                <DocumentScannerIcon />
-              </div> */}
-              <div className="project-field">
   <InputLabel id="aadhaar-label" sx={{ color: "black" }}>
     Upload Aadhaar{renderRequiredAsterisk(true)}
   </InputLabel>
@@ -233,7 +303,23 @@ const handleAddressSelect = (selectedAddress) => {
     <input type="file" onChange={handleFileChange} required />
     <DocumentScannerIcon className="input-icon" />
   </div>
-</div>
+</div> */}
+<div className="adharNumber">
+                <InputLabel
+                  id="demo-simple-select-label"
+                  sx={{ color: "black" }}
+                >
+                  Aadhaar Number {renderRequiredAsterisk(true)}
+                </InputLabel>
+
+                <div id="adhaar-input">
+                <input 
+                value={formData.aadhaarNumber}
+                onChange={(e) => setFormData({ ...formData, aadhaarNumber: e.target.value })}
+                 required 
+                />
+                </div>
+              </div>
 
               </div>
               
@@ -245,7 +331,12 @@ const handleAddressSelect = (selectedAddress) => {
                   Gender{renderRequiredAsterisk(true)}
                 </InputLabel>
                 <div className="gender-input">
-                  <select id="gender" name="gender" required>
+                  <select 
+                  id="gender"
+                   name="gender" 
+                   required
+                   onChange={(e) => setFormData({ ...formData, gender: e.target.value })}
+                   >
                     <option value="male">Male</option>
                     <option value="female">Female</option>
                   </select>
@@ -406,7 +497,7 @@ const handleAddressSelect = (selectedAddress) => {
                     id="address"
                     name="address"
                     required
-                    onChange={handleAddressChange}
+                    onChange={(e) => setFormData({ ...formData, address: e.target.value })}
                     value={formData.address || ''}
                   />
                   {suggestions.length > 0 && (
@@ -455,6 +546,8 @@ const handleAddressSelect = (selectedAddress) => {
                     id="taluka"
                     name="taluka"
                     required
+                    // value={formData.taluka || ''}
+                    // onChange={(e) => setFormData({ ...formData, taluka: e.target.value })}
                     value={formData.taluka || ''}
                     onChange={(e) => setFormData({ ...formData, taluka: e.target.value })}
                   />
@@ -473,6 +566,8 @@ const handleAddressSelect = (selectedAddress) => {
                     id="district"
                     name="district"
                     required
+                    // value={formData.district || ''}
+                    // onChange={(e) => setFormData({ ...formData, district: e.target.value })}
                     value={formData.district || ''}
                     onChange={(e) => setFormData({ ...formData, district: e.target.value })}
                   />
@@ -494,8 +589,10 @@ const handleAddressSelect = (selectedAddress) => {
                     id="personal-pincode"
                     name="personal-pincode"
                     required
+                    // value={formData.pincode || ''}
+                    // onChange={(e) => setFormData({ ...formData, pincode: e.target.value })}
                     value={formData.pincode || ''}
-                    onChange={(e) => setFormData({ ...formData, pincode: e.target.value })}
+                    onChange={handlePincodeChange}
                   />
                 </div>
 
@@ -512,6 +609,8 @@ const handleAddressSelect = (selectedAddress) => {
                     id="state"
                     name="state"
                     required
+                    // value={formData.state || ''}
+                    // onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                     value={formData.state || ''}
                     onChange={(e) => setFormData({ ...formData, state: e.target.value })}
                   />
